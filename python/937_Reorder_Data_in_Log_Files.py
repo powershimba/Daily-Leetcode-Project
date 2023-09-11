@@ -29,11 +29,18 @@ Output: ["g1 act car","a8 act zoo","ab1 off key dog","a1 9 2 3 1","zo4 4 7"]
 #My Solution
 class Solution(object):
     def reorderLogFiles(self, logs):
-        return_logs = []
-        for i in range(0, len(logs)):
-            if type(logs[i][1]) == int:
-                 return_logs.append(logs[i])                    
+        new_logs = []
+        for log in logs:
+            new_logs.append(log.split())
+        
+        ptr1 = ptr2 = 1
+        result = []
 
+        length = len(new_logs)
+
+        while ptr1 == length:
+            if type(new_logs[ptr1]) == int:
+                result.append(new_logs[ptr1])
         """
         :type logs: List[str]
         :rtype: List[str]

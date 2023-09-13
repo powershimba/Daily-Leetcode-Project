@@ -32,17 +32,22 @@ class Solution(object):
         new_logs = []
         for log in logs:
             new_logs.append(log.split())
-        
+        print(new_logs)    
+
+        result = []
+        for log in new_logs:
+            if not result:
+                result.append(log)
+            elif type(log[1]) == int:
+                result.append(log)
+
+"""
         ptr1 = ptr2 = 1
         result = []
 
-        length = len(new_logs)
+        len(new_logs) = length
 
-        while ptr1 == length:
+        while ptr == length:
             if type(new_logs[ptr1]) == int:
                 result.append(new_logs[ptr1])
-        """
-        :type logs: List[str]
-        :rtype: List[str]
-        """
-        
+"""

@@ -26,28 +26,19 @@ Input: logs = ["a1 9 2 3 1","g1 act car","zo4 4 7","ab1 off key dog","a8 act zoo
 Output: ["g1 act car","a8 act zoo","ab1 off key dog","a1 9 2 3 1","zo4 4 7"]
 """
 
-#My Solution
 class Solution(object):
     def reorderLogFiles(self, logs):
-        new_logs = []
+        digit_logs = []
+        letter_logs = []
+
         for log in logs:
-            new_logs.append(log.split())
-        print(new_logs)    
+            log_splited = log.split() #Split string into single word
+            if log_splited[1].isdigit(): #Can't use type()==int. It's string.
+                digit_logs.append(log)
+            else:
+                letter_logs.append(log_splited)
+        
+        letter_logs.sort(key = lambda x: (x[1:], x[0])) #Sort based on the value of x[1:]. If tie, sort based on x[0]
+        letter_logs = [" ".join(log) for log in letter_logs] #Turn log_splited back to the log
 
-        result = []
-        for log in new_logs:
-            if not result:
-                result.append(log)
-            elif type(log[1]) == int:
-                result.append(log)
-
-"""
-        ptr1 = ptr2 = 1
-        result = []
-
-        len(new_logs) = length
-
-        while ptr == length:
-            if type(new_logs[ptr1]) == int:
-                result.append(new_logs[ptr1])
-"""
+        return letter_logs + digit_logs

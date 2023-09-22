@@ -1,5 +1,5 @@
 # Brutal Force Solution : O(n3)
-# My Solution : O(n2)
+# My Solution : O(n2)ls
 
 class Solution(object):
     def longestPalindrome(self, s):

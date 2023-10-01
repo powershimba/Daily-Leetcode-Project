@@ -1,4 +1,5 @@
 """
+Medium
 2. Add Two Numbers
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
 You may assume the two numbers do not contain any leading zero, except the number 0 itself.
@@ -23,6 +24,30 @@ Output: [8,9,9,9,0,0,0,1]
 #         self.val = val
 #         self.next = next
 
+# Clean Code
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        # Create root, head node at once
+        root = head = ListNode(0)
+
+        carry = 0
+        
+        while l1 or l2 or carry:
+            sum = 0
+            if l1:
+                sum += l1.val
+                l1 = l1.next
+            if l2:
+                sum += l2.val
+                l2 = l2.next
+            
+            carry, val = divmod(sum+carry, 10)
+            
+            head.next = ListNode(val)
+            head = head.next
+        
+        return root.next
+            
 #Iteration
 #Time Complexity: O(n) / 43ms(64.20%)
 #Space Complexity: O(n) / 13.28MB(80.24%) 

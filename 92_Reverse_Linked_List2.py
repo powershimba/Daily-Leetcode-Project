@@ -9,6 +9,30 @@ Medium
 #         self.val = val
 #         self.next = next
 
+# Clean Code
+# Time: O(n) / 15ms(53.03%)
+# Space: O(1) / 13.31MB(90.45%)
+class Solution(object):
+    def reverseBetween(self, head, left, right):
+        if not head or left == right:
+            return head
+        
+        root = start = ListNode(None)
+        root.next = head
+
+        # Set start(idx: left-1), end(idx: left)
+        for _ in range(left-1):
+            start = start.next
+        end = start.next
+
+        # Swap nodes using 3 pointers
+        for _ in range(right-left):
+            tmp = start.next
+            end.next, start.next, start.next.next = end.next.next, end.next, tmp
+            # reason why not 'end.next.next = temp' : end.next node changes 
+
+        return root.next
+
 # Time: O(n) / 19ms(21.37%)
 # Space: O(1) / 13.31MB(90.45%)
 class Solution(object):

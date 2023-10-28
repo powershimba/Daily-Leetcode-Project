@@ -1,51 +1,90 @@
-"""
-232. Implement Queue using Stacks
-Easy
-"""
+# Linked List
+# Time Complexity: O(n) / 71ms(5.19%)
+class ListNode():
+    def __init__(self, val, nxt, prev):
+        self.val, self.next, self.prev = val, nxt, prev
 
-class MyQueue(object):
+class MyCircularQueue(object):
 
-    def __init__(self):
-        self.st1 = []
-        self.st2 = []
+    def __init__(self, k):
+        """
+        :type k: int
+        """
+        self.space = k
+        self.head = ListNode(0, None, None)
+        self.tail = ListNode(0, None, self.head)
+        self.head.next = self.tail
 
-    def push(self, x):
+    def enQueue(self, value):
         """
-        :type x: int
-        :rtype: None
+        :type value: int
+        :rtype: bool
         """
-        while self.st1:
-            self.st2.append(self.st1.pop())
-        self.st1.append(x)
-        while self.st2:
-            self.st1.append(self.st2.pop())
+        if self.isFull():
+            return False
+        else:
+            new = ListNode(value, self.tail, self.tail.prev)
+            self.tail.prev.next = new
+            self.tail.prev = new
+            self.space -= 1
+            return True
 
-    def pop(self):
-        """
-        :rtype: int
-        """
-        return self.st1.pop()
-
-
-    def peek(self):
-        """
-        :rtype: int
-        """
-        return self.st1[-1]
-        
-    def empty(self):
+    def deQueue(self):
         """
         :rtype: bool
         """
-        if self.st1:
+        if self.isEmpty():
             return False
         else:
+            self.head.next = self.head.next.next
+            self.head.next.prev = self.head
+            self.space += 1
             return True
 
 
-# Your MyQueue object will be instantiated and called as such:
-# obj = MyQueue()
-# obj.push(x)
-# param_2 = obj.pop()
-# param_3 = obj.peek()
-# param_4 = obj.empty()
+    def Front(self):
+        """
+        :rtype: int
+        """
+        if self.isEmpty():
+            return -1
+        else:
+            return self.head.next.val
+
+    def Rear(self):
+        """
+        :rtype: int
+        """
+        if self.isEmpty():
+            return -1
+        else:
+            return self.tail.prev.val
+
+    def isEmpty(self):
+        """
+        :rtype: bool
+        """
+        if self.head.next == self.tail :
+            return True
+        else:
+            return False
+
+    def isFull(self):
+        """
+        :rtype: bool
+        """
+        if self.space == 0:
+            return True
+        else:
+            return False
+        
+
+
+# Your MyCircularQueue object will be instantiated and called as such:
+# obj = MyCircularQueue(k)
+# param_1 = obj.enQueue(value)
+# param_2 = obj.deQueue()
+# param_3 = obj.Front()
+# param_4 = obj.Rear()
+# param_5 = obj.isEmpty()
+# param_6 = obj.isFull()

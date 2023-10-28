@@ -1,5 +1,6 @@
 # Linked List
 # Time Complexity: O(n) / 71ms(5.19%)
+# Space Complexity: O(n) / 14.58MB(6.01%)
 class ListNode():
     def __init__(self, val, nxt, prev):
         self.val, self.next, self.prev = val, nxt, prev
@@ -78,6 +79,68 @@ class MyCircularQueue(object):
         else:
             return False
         
+
+# Array
+# Time complexity: O(n) / 49ms(49.79%)
+# Space complexity: O(n) / 13.52MB(95.28%)
+class MyCircularQueue(object):
+
+    def __init__(self, k):
+        """
+        :type k: int
+        """
+        self.q = [None]*k
+        self.maxlen = k
+        self.head = 0
+        self.tail = 0 
+
+    def enQueue(self, value):
+        """
+        :type value: int
+        :rtype: bool
+        """
+        if self.q[self.tail] is not None:
+            return False
+        else:
+            self.q[self.tail] = value
+            self.tail = (self.tail + 1) % self.maxlen
+            return True
+        
+
+    def deQueue(self):
+        """
+        :rtype: bool
+        """
+        if self.q[self.head] is None:
+            return False
+        else:
+            self.q[self.head] = None
+            self.head = (self.head + 1) % self.maxlen
+            return True
+
+    def Front(self):
+        """
+        :rtype: int
+        """
+        return -1 if self.q[self.head] is None else self.q[self.head]
+
+    def Rear(self):
+        """
+        :rtype: int
+        """
+        return -1 if self.q[self.tail-1] is None else self.q[self.tail-1]
+
+    def isEmpty(self):
+        """
+        :rtype: bool
+        """
+        return (self.head == self.tail) and self.q[self.head] is None
+
+    def isFull(self):
+        """
+        :rtype: bool
+        """
+        return (self.head == self.tail) and self.q[self.head] is not None
 
 
 # Your MyCircularQueue object will be instantiated and called as such:

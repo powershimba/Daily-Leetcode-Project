@@ -1,3 +1,32 @@
+# Sliding windows with dictionary
+# Time: O(n) / 99.48%
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        # Create hash map: (key, value) = (tail value, tail index)
+        h = {}
+        
+        # Sliding window with two pointers
+        head = maxlen = 0
+
+        for tail, v in enumerate(s):
+            # if tail value is already in window: move head ptr after the duplicated index(h[v])
+            if v in h and h[v] >= head:
+                head = h[v] + 1
+            # else: renew the maxlen
+            else:
+                maxlen = max(tail - head + 1, maxlen)
+            # before move tail ptr, add tail to hash map
+            h[s[tail]] = tail
+        
+        return maxlen
+                
+
+# Two pointers with dictionary
+# Time : O(n) / 72.51%
 class Solution(object):
     def lengthOfLongestSubstring(self, s):
         # Exception
@@ -35,6 +64,8 @@ class Solution(object):
        
         return maxlen
 
+# Iterate
+# Time: O(n2) / 20.18%
 class Solution(object):
     def substring(self, s):
         output = {}

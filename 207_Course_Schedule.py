@@ -52,3 +52,42 @@ class Solution(object):
                     queue.append(i)
         
         return visited == numCourses
+   
+# 2. DFS
+#   1) Iterate all vertex, tracking adjacent vertexes of each node recursively
+#   2) while tracking vertexes, find same vertex during ongoing track, turn True(dectect cycle)
+#   3) if one of the step in dfs stack  
+
+class Solution(object):
+    # We need 1) curr index 2) adj list of curr ptr 3) tracked storage 4) visited node
+    def dfs(self, curr, adj, track, visited):
+        if track[curr]:
+            return True
+        if visited[curr]:
+            return False
+        
+        track[curr] = True
+        visited[curr] = True
+
+        for node in adj[curr]:
+            if self.dfs(node, adj, track, visited):
+                return True
+        
+        track[curr] = False
+        return False
+
+    def canFinish(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """
+        adj = [[] for _ in range(numCourses)]
+        for pre in prerequisites:
+            adj[pre[1]].append(pre[0])
+        visited = [False] * numCourses
+        track = [False] * numCourses
+        for i in range(numCourses):
+            if self.dfs(i, adj, track, visited):
+                return False
+        return True 
